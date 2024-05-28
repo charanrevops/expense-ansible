@@ -1,5 +1,5 @@
 - name: Frontend Playbook
-  hosts: all
+  hosts: frontend
   become: true
   tasks:
     - name: Installing NGINX
