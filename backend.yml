@@ -47,7 +47,7 @@
 
     - name: Install MySQL Client
       ansible.builtin.dnf:
-        name: sql
+        name: mysql
         state: present
 
 
