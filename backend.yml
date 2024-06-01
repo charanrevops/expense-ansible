@@ -1,3 +1,73 @@
+- name: Backend Playbook
+  hosts: all
+  become: true
+  tasks:
+    - name: Set Prompt
+      ansible.builtin.shell: set-prompt backend
+
+    - name: Disable NodeJS
+      ansible.builtin.shell: dnf module disable nodejs -y
+
+    - name: Enable NodeJS 20 version
+      ansible.builtin.shell: dnf module enable nodejs:20 -y
+
+    - name: Install NodeJS
+      ansible.builtin.dnf:
+        name: nodejs
+        state: present
+
+    - name: Add Expense user
+      ansible.builtin.user:
+        name: expense
+
+    - name: Copy Backend Service File
+      ansible.builtin.copy:
+        src: backend.service
+        dest: /etc/systemd/system/backend.service
+
+    - name: Deleting Existing Application Directory
+      ansible.builtin.file:
+        name: /app
+        state: absent
+
+    - name: Create Application Directory
+      ansible.builtin.file:
+        name: /app
+        state: directory
+
+    - name: Download and Extract Backend Code
+      ansible.builtin.unarchive:
+        src: https://expense-artifacts.s3.amazonaws.com/expense-backend-v2.zip
+        dest: /app
+        remote_src: true
+
+    - name: Download NodeJS App Dependencies
+      community.general.npm:
+        path: /app
+
+    - name: Install MySQL Client
+      ansible.builtin.dnf:
+        name: sql
+        state: present
+
+
+    - name: Load Schmea
+      community.mysql.mysql_db:
+        state: import
+        name: all
+        encoding: latin1
+        target: /app/schema/backend.sql
+        login_user: root
+        login_password: ExpenseApp@1
+        login_host: 172.31.43.127
+
+
+    - name: Start Backend Service
+      ansible.builtin.systemd_service:
+        name: backend
+        state: restarted
+        enabled: true
+        daemon_reload: true
 
 
 
@@ -13,108 +83,3 @@
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-#source common.sh
-#rm -f /tmp/expense.log
-#
-#
-#if [ -z "$1" ]; then
-#echo Input MySQL password is missing
-#exit 1
-#fi
-#
-#
-#HEADING Disble NodeJS Default Version
-#dnf module disable nodejs -y &>>/tmp/expense.log
-#STAT $?
-#
-#HEADING Enable NodeJS Default Version
-#dnf module enable nodejs:20 -y &>>/tmp/expense.log
-#STAT $?
-#
-#
-#HEADING Install NodeJS
-#dnf install nodejs -y &>>/tmp/expense.log
-#STAT $?
-#
-#
-#
-#
-#HEADING Add Expense User
-#id expense &>>/tmp/expense.log
-#if [ $? -ne 0 ];then
-#useradd expense &>>/tmp/expense.log
-#fi
-#STAT $?
-#
-#
-#HEADING SetUp Backend Service
-#cp backend.service /etc/systemd/system/backend.service &>>/tmp/expense.log
-#STAT $?
-#
-#
-#HEADING Deleting Existing Application Directory
-#rm -rf /app
-#STAT $?
-#
-#
-#HEADING Create Application Directory
-#mkdir /app &>>/tmp/expense.log
-#STAT $?
-#
-#
-#HEADING Download Backend code
-#curl -o /tmp/backend.zip https://expense-artifacts.s3.amazonaws.com/expense-backend-v2.zip &>>/tmp/expense.log
-#cd /app
-#STAT $?
-#
-#HEADING Extract Backend Code
-#unzip /tmp/backend.zip &>>/tmp/expense.log
-#STAT $?
-#
-#
-#HEADING Download NodeJS App Dependencies
-#npm install &>>/tmp/expense.log
-#STAT $?
-#
-#
-#HEADING Install MySQL CLient
-#dnf install mysql -y &>>/tmp/expense.log
-#STAT $?
-#
-#
-#HEADING Load Schema
-#mysql -h 172.31.33.249 -uroot -pExpenseApp@1 < /app/schema/backend.sql
-#STAT $?
-#
-#
-#
-#HEADING Start Backend Service
-#
-#systemctl daemon-reload
-#systemctl enable backend
-#systemctl restart backend
-#STAT $?
