@@ -55,7 +55,7 @@
     - name: Install PYMySQL
       ansible.builtin.dnf:
         name:
-          - pip3.11 PyMySQL
+          - pip3 PyMySQL
         state: present
 
 
