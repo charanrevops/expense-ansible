@@ -52,6 +52,11 @@
           - python3-PyMySQL
         state: present
 
+    - name: Install PyMySQL
+      package:
+        name: python3-PyMySQL
+        state: present
+
     - name: Load Schema
       community.mysql.mysql_db:
         state: import
