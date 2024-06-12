@@ -50,13 +50,13 @@
         name:
           - mysql
           - python3-PyMySQL
-        state: latest
+        state: present
 
     - name: Install PYMySQL
       ansible.builtin.dnf:
         name:
           - PyMySQL
-        state: latest
+        state: present
 
 
 
