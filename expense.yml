@@ -1,14 +1,8 @@
-- name: MYSQL Playbook
+- name: Backend Playbook
   hosts: all
   become: true
   roles:
-    - mysql
-
-
-
-
-
-
+    - "{{ role_name }}"
 
 
 
