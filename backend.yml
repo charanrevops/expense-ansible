@@ -52,11 +52,11 @@
           - python3-PyMySQL
         state: latest
 
-#    - name: Install MySQL Client and MySQL
-#      ansible.builtin.dnf:
-#        name:
-#          - PyMySQL
-#        state: absent
+    - name: Install PYMySQL
+      ansible.builtin.dnf:
+        name:
+          - PyMySQL
+        state: latest
 
 
 
