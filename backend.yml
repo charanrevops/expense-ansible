@@ -50,7 +50,7 @@
         name:
           - mysql
           - python3-PyMySQL
-        state: present
+        state: latest
 
 #    - name: Install MySQL Client and MySQL
 #      ansible.builtin.dnf:
