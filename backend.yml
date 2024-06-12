@@ -53,7 +53,11 @@
         state: present
 
     - name: Install PYMySQL
-      ansible.builtin.shell: sudo pip3 install PyMySQL
+      ansible.builtin.shell:
+        name:
+          - sudo pip3 install PyMySQL
+          - pwd
+
 #        name:
 #          - pip3 PyMySQL
 #        state: present
