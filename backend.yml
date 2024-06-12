@@ -56,7 +56,7 @@
       ansible.builtin.dnf:
         name:
           - PyMySQL
-        state: latest
+        state: absent
 
 
 
