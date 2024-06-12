@@ -52,11 +52,11 @@
           - python3-PyMySQL
         state: present
 
-    - name: Install MySQL Client and MySQL
-      ansible.builtin.dnf:
-        name:
-          - PyMySQL
-        state: absent
+#    - name: Install MySQL Client and MySQL
+#      ansible.builtin.dnf:
+#        name:
+#          - PyMySQL
+#        state: absent
 
 
 
