@@ -52,10 +52,6 @@
           - python3-PyMySQL
         state: present
 
-    - name: "Install ansible python3 mysql dependency"
-      apt:
-        name: python3-mysqldb
-        state: latest
 
     - name: Load Schema
       community.mysql.mysql_db:
@@ -74,6 +70,8 @@
         state: restarted
         enabled: true
         daemon_reload: true
+
+
 
 
 
