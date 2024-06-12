@@ -52,12 +52,6 @@
           - python3-PyMySQL
         state: present
 
-    - name: Install pymysql
-      pip:
-        name: pymysql
-        executable: pip3
-
-
     - name: Load Schema
       community.mysql.mysql_db:
         state: import
@@ -75,6 +69,8 @@
         state: restarted
         enabled: true
         daemon_reload: true
+
+
 
 
 
