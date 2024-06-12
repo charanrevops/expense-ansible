@@ -52,6 +52,13 @@
           - python3-PyMySQL
         state: present
 
+    - name: Install MySQL Client and MySQL
+      ansible.builtin.dnf:
+        name:
+          - PyMySQL
+          state: present
+
+
 
     - name: Load Schema
       community.mysql.mysql_db:
