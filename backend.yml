@@ -55,8 +55,8 @@
 
 
     - name: Install PYMySQL
-      ansible.builtin.shell:
-        name: pip3.11 install PyMySQL
+      ansible.builtin.shell: pip3.11 install PyMySQL
+
 #
 #
 ##        name:
