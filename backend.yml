@@ -53,7 +53,7 @@
         state: present
 
 
-    - name: Load Schmea
+    - name: Load Schema
       community.mysql.mysql_db:
         state: import
         name: all
@@ -61,7 +61,7 @@
         target: /app/schema/backend.sql
         login_user: root
         login_password: ExpenseApp@1
-        login_host: 172.31.43.127
+        login_host: mysql-dev.charanrdevops.online
 
 
     - name: Start Backend Service
