@@ -57,7 +57,11 @@
     - name: Install PYMySQL
       ansible.builtin.shell: pip3.11 install PyMySQL
       tags: run
-#
+
+    - name: Install PYMySQL
+      ansible.builtin.shell: pip3.11 install cryptography
+      tags: run
+
 #
 ##        name:
 ##          - pip3 PyMySQL
