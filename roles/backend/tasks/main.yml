@@ -1,0 +1,85 @@
+- name: Set Prompt
+  ansible.builtin.shell: set-prompt backend
+
+- name: Disable NodeJS
+  ansible.builtin.shell: dnf module disable nodejs -y
+
+- name: Enable NodeJS 20 version
+  ansible.builtin.shell: dnf module enable nodejs:20 -y
+
+- name: Install NodeJS
+  ansible.builtin.dnf:
+    name: nodejs
+    state: present
+
+- name: Add Expense user
+  ansible.builtin.user:
+    name: expense
+
+- name: Copy Backend Service File
+  ansible.builtin.copy:
+    src: backend.service
+    dest: /etc/systemd/system/backend.service
+
+- name: Deleting Existing Application Directory
+  ansible.builtin.file:
+    name: /app
+    state: absent
+
+- name: Create Application Directory
+  ansible.builtin.file:
+    name: /app
+    state: directory
+
+- name: Download and Extract Backend Code
+  ansible.builtin.unarchive:
+    src: https://expense-artifacts.s3.amazonaws.com/expense-backend-v2.zip
+    dest: /app
+    remote_src: true
+
+- name: Download NodeJS App Dependencies
+  community.general.npm:
+    path: /app
+
+- name: Install MySQL Client and MySQL
+  ansible.builtin.dnf:
+    name:
+      - mysql
+      - python3-PyMySQL
+    state: present
+
+
+
+- name: Install PYMySQL
+  ansible.builtin.shell: pip3.11 install PyMySQL
+  tags: run
+
+- name: Install PYMySQL
+  ansible.builtin.shell: pip3.11 install cryptography
+  tags: run
+
+- name: Load Schema
+  community.mysql.mysql_db:
+    state: import
+    name: all
+    encoding: latin1
+    target: /app/schema/backend.sql
+    login_user: root
+    login_password: ExpenseApp@1
+    login_host: mysql-dev.charanrdevops.online
+  tags: run
+
+- name: Start Backend Service
+  ansible.builtin.systemd_service:
+    name: backend
+    state: restarted
+    enabled: true
+    daemon_reload: true
+  tags: run
+
+
+
+
+
+
+
