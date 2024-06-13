@@ -21,21 +21,27 @@
     src: backend.service
     dest: /etc/systemd/system/backend.service
 
-- name: Deleting Existing Application Directory
-  ansible.builtin.file:
-    name: /app
-    state: absent
 
-- name: Create Application Directory
-  ansible.builtin.file:
-    name: /app
-    state: directory
+- name: Import App Prerequisites
+  ansible.builtin.import_role:
+    name: common
+    tasks_from: app-prereq
 
-- name: Download and Extract Backend Code
-  ansible.builtin.unarchive:
-    src: https://expense-artifacts.s3.amazonaws.com/expense-backend-v2.zip
-    dest: /app
-    remote_src: true
+#- name: Deleting Existing Application Directory
+#  ansible.builtin.file:
+#    name: /app
+#    state: absent
+#
+#- name: Create Application Directory
+#  ansible.builtin.file:
+#    name: /app
+#    state: directory
+#
+#- name: Download and Extract Backend Code
+#  ansible.builtin.unarchive:
+#    src: https://expense-artifacts.s3.amazonaws.com/expense-backend-v2.zip
+#    dest: /app
+#    remote_src: true
 
 - name: Download NodeJS App Dependencies
   community.general.npm:
