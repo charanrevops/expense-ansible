@@ -1,4 +1,4 @@
-- name: Backend Playbook
+- name: Expense Project Playbook
   hosts: all
   become: true
   roles:
