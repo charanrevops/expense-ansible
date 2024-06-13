@@ -1,5 +1,5 @@
-- name: Setup Prompt
-  ansible.builtin.shell: set-prompt mysql
+#- name: Setup Prompt
+#  ansible.builtin.shell: set-prompt mysql
 
 - name: Installing mysql server
   ansible.builtin.dnf:

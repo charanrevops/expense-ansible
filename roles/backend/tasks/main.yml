@@ -1,5 +1,5 @@
-- name: Set Prompt
-  ansible.builtin.shell: set-prompt backend
+#- name: Set Prompt
+#  ansible.builtin.shell: set-prompt backend
 
 - name: Disable NodeJS
   ansible.builtin.shell: dnf module disable nodejs -y

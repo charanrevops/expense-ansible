@@ -1,3 +1,6 @@
+#- name: Setup Prompt
+#  ansible.builtin.shell: set-prompt frontend
+
 - name: Installing NGINX
   ansible.builtin.dnf:
     name: nginx
