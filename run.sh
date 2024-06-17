@@ -1,6 +1,6 @@
 # for template pipeline we will skip the run
 
-if [-z "$pipeline" == "true"]; then
+if [ "$pipeline" == "true" ]; then
   exit
 fi
 
